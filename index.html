@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank of Atlantic - Secure Online Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="ocean"></div>
+    <div class="security-overlay"></div>
+    
+    <!-- Security indicators -->
+    <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>Secure Connection • TLS 1.2 • Encrypted</span>
+    </div>
+    
+    <div class="session-warning">
+        <i class="fas fa-clock"></i>
+        <span>For security, your session will time out in 14:32 minutes</span>
+    </div>
+    
+    <!-- Bitcoin Wallet Modal -->
+    <div class="bitcoin-modal" id="bitcoinModal">
+        <div class="bitcoin-content">
+            <button class="close-bitcoin" id="closeBitcoin">&times;</button>
+            
+            <div class="bitcoin-header">
+                <h2><i class="fab fa-bitcoin"></i> Account Activation Payment</h2>
+                <p>Complete your account activation with a cryptocurrency deposit</p>
+            </div>
+            
+            <div class="qr-code-container">
+                <div class="qr-code">
+                    <i class="fab fa-bitcoin" style="font-size: 80px; color: #F2A900;"></i>
+                </div>
+            </div>
+            
+            <div class="wallet-address" id="walletAddress">
+                <span>3Cz913pgQNHRhrXn9uLs2wHLPnS4Hkx8Gv</span>
+                <i class="fas fa-copy"></i>
+            </div>
+            
+            <p class="deposit-instruction">Please deposit your registration fee to activate your account</p>
+            
+            <div class="crypto-disclaimer">
+                <p>PLEASE NOTE: We only accept cryptocurrency due to its ability to provide fast, secure and reliable GLOBAL transactions. This ensures smoother payments without delays or restrictions from traditional banking systems.</p>
+            </div>
+            
+            <!-- NEXT Button -->
+            <button class="next-btn" id="nextBtn">
+                NEXT
+            </button>
+        </div>
+    </div>
+    
+    <!-- Thank You Modal -->
+    <div class="thankyou-modal" id="thankyouModal">
+        <div class="thankyou-content">
+            <div class="thankyou-header">
+                <h2>THANK YOU</h2>
+                <div class="thankyou-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            
+            <div class="thankyou-instructions">
+                <p>Please email the following documents to:</p>
+                <p class="thankyou-email">atlanticbank@financier.com</p>
+                
+                <ul>
+                    <li><i class="fas fa-file-contract"></i> Last Will and Testament</li>
+                    <li><i class="fas fa-box"></i> Safety Deposit Box Form</li>
+                    <li><i class="fas fa-gavel"></i> Royal Court of Justice Affidavit</li>
+                    <li><i class="fas fa-receipt"></i> Proof of Payment</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">Please allow our administration 3-5 business days to process your claim.</p>
+            </div>
+            
+            <button class="close-thankyou" id="closeThankyou">
+                CLOSE
+            </button>
+        </div>
+    </div>
+    
+    <!-- Copy notification -->
+    <div class="copy-notification" id="copyNotification">
+        <i class="fas fa-check-circle"></i> Wallet address copied to clipboard!
+    </div>
+    
+    <!-- Homepage Content -->
+    <div id="homepage">
+        <!-- Header with login form -->
+        <header class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="bank-name">BANK OF ATLANTIC</span>
+                    <span class="tagline">SECURE ONLINE BANKING</span>
+                </div>
+            </div>
+            
+            <div class="header-login">
+                <div class="login-input">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Email">
+                </div>
+                
+                <div class="login-input">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                
+                <button class="login-btn" id="loginBtn">
+                    <i class="fas fa-lock"></i> SIGN IN
+                </button>
+                
+                <button class="register-btn" id="openRegister">
+                    <i class="fas fa-user-plus"></i> REGISTER
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main content with big title -->
+        <main class="main-content">
+            <h1 class="main-title">Welcome to Bank of Atlantic</h1>
+            <p class="subtitle">Your trusted partner for secure and innovative banking solutions. FDIC insured up to £250,000.</p>
+            
+            <div class="cta-buttons">
+                <button class="cta-btn cta-primary" id="openRegisterMain">
+                    <i class="fas fa-user-plus"></i> CREATE ACCOUNT
+                </button>
+                <button class="cta-btn cta-secondary">
+                    <i class="fas fa-info-circle"></i> LEARN MORE
+                </button>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Military-Grade Security</h3>
+                    <p class="feature-desc">Advanced 256-bit encryption and multi-factor authentication protect your accounts 24/7.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Banking</h3>
+                    <p class="feature-desc">Bank anytime, anywhere with our award-winning mobile app. Rated 4.8 stars on App Store.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="feature-title">Global Access</h3>
+                    <p class="feature-desc">Manage your finances across 150+ countries with our international banking services.</p>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Registration Form -->
+        <div class="registration-container" id="registrationContainer">
+            <div class="registration-form">
+                <button class="close-btn" id="closeRegister">&times;</button>
+                
+                <div class="form-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join Bank of Atlantic and experience premium banking services</p>
+                </div>
+                
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">ZIP/Postal Code</label>
+                            <input type="text" id="zip" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountType">Account Type</label>
+                        <select id="accountType" required>
+                            <option value="">Select Account Type</option>
+                            <option value="domiciliary">DOMICILIARY SAVINGS ACCOUNT</option>
+                            <option value="cashplus">CASHPLUS BUSINESS CHEQUE ACCOUNT</option>
+                            <option value="business">BUSINESS TRANSIT ACCOUNT</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="usernameReg">Create Online ID</label>
+                            <input type="text" id="usernameReg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordReg">Create Password</label>
+                            <input type="password" id="passwordReg" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the Terms & Conditions and Privacy Policy</label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">CREATE ACCOUNT</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Loading overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-text">
+                <h3>Processing Your Application</h3>
+                <p>We are securely creating your account and verifying your information. This may take a few moments. Please do not refresh or close this page.</p>
+            </div>
+        </div>
+        
+        <!-- Account created modal -->
+        <div class="account-created" id="accountCreated">
+            <div class="account-content">
+                <h2>Account Successfully Created!</h2>
+                <p>Thank you for choosing Bank of Atlantic. Your premium account has been successfully created.</p>
+                <p>A dedicated account manager will contact you within 24 hours to complete the setup process and collect the account fee.</p>
+                
+                <div class="account-details">
+                    <div>
+                        <span>Account Number:</span>
+                        <span>ATL-72641983</span>
+                    </div>
+                    <div>
+                        <span>Routing Number:</span>
+                        <span>084009519</span>
+                    </div>
+                    <div>
+                        <span>Account Type:</span>
+                        <span id="successAccountType">-</span>
+                    </div>
+                    <div>
+                        <span>Account Fee:</span>
+                        <span id="successAccountFee">-</span>
+                    </div>
+                </div>
+                
+                <p>For security reasons, we recommend changing your password after your first login.</p>
+                <button class="close-success" id="closeSuccess">CONTINUE TO ONLINE BANKING</button>
+            </div>
+        </div>
+        
+
+        </div>
+    </div>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-container" id="dashboard">
+        <!-- Header -->
+        <header class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="bank-name">BANK OF ATLANTIC</span>
+                    <span class="tagline">SECURE ONLINE BANKING</span>
+                </div>
+            </div>
+            
+            <div class="header-login">
+                <div class="login-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                
+                <button class="login-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+        </header>
+        
+        <!-- Dashboard Container -->
+        <div class="dashboard-container" style="display: flex;">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name" id="dashboardUserName"> </div>
+                        <div class="user-status">
+                            <span class="status-indicator"></span>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-tab="dashboard-tab">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="accounts-tab">
+                            <i class="fas fa-wallet"></i>
+                            <span>Accounts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="transfers-tab">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transfers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="billpay-tab">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Bill Pay</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="investments-tab">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Investments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="settings-tab">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="security-tab">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="help-tab">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Help</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <button class="logout-btn" id="sidebarLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="dashboard-content">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title" id="dashboardTitle">Welcome back, John</h1>
+                    <p class="dashboard-subtitle">Here's your financial summary as of today, <span id="currentDate"></span></p>
+                </div>
+                
+                <!-- Transfer restriction notice -->
+                <div class="transfer-restriction" id="transferRestrictionNotice">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Account Activation Required</h3>
+                    <p>Your account must be activated before you can make transfers. Please complete the activation process to enable all banking features.</p>
+                    <button class="activate-btn" id="activateAccountBtn">
+                        <i class="fas fa-unlock"></i> ACTIVATE ACCOUNT
+                    </button>
+                </div>
+                
+                <!-- Dashboard Tab (default) -->
+                <div id="dashboard-tab" class="tab-content active">
+                    <div class="dashboard-grid">
+                        <!-- Total Balance Card -->
+                        <div class="dashboard-card total-balance">
+                            <div class="balance-label">TOTAL BALANCE</div>
+                            <div class="balance-amount" id="totalBalance">£5,698,070.97</div>
+                            <div class="balance-change">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>No change since last month</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Transactions Card -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-list"></i>
+                                    Recent Transactions
+                                </h2>
+                                <div class="card-action">View All</div>
+                            </div>
+                            
+                            <div class="empty-state">No recent transactions</div>
+                        </div>
+                        
+                        <!-- Security Card -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Security Status
+                                </h2>
+                            </div>
+                            
+                            <div class="security-status">
+                                <div class="transaction-item">
+                                    <div class="transaction-details">
+                                        <div class="transaction-icon" style="background: rgba(76, 175, 80, 0.2);">
+                                            <i class="fas fa-check" style="color: #4caf50;"></i>
+                                        </div>
+                                        <div class="transaction-info">
+                                            <div class="transaction-name">Two-Factor Authentication</div>
+                                            <div class="transaction-date">Inactive • SMS Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-details">
+                                        <div class="transaction-icon" style="background: rgba(76, 175, 80, 0.2);">
+                                            <i class="fas fa-check" style="color: #4caf50;"></i>
+                                        </div>
+                                        <div class="transaction-info">
+                                            <div class="transaction-name">Device Recognition</div>
+                                            <div class="transaction-date">This device is trusted</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-details">
+                                        <div class="transaction-icon" style="background: rgba(255, 152, 0, 0.2);">
+                                            <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i>
+                                        </div>
+                                        <div class="transaction-info">
+                                            <div class="transaction-name">Password Strength</div>
+                                            <div class="transaction-date">Last changed 90 days ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="transfer-btn" style="margin-top: 20px;">
+                                <i class="fas fa-shield-alt"></i> Security Center
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accounts Tab -->
+                <div id="accounts-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-wallet"></i>
+                                Accounts
+                            </h2>
+                        </div>
+                        
+                        <div class="account-summary">
+                            <div class="account-item" data-account-type="domiciliary">
+                                <div class="account-info">
+                                    <div class="account-name">DOMICILIARY SAVINGS ACCOUNT</div>
+                                    <div class="account-number">ATL-73019845</div>
+                                </div>
+                                <div class="value">£1,999.99</div>
+                                <button class="activate-btn">ACTIVATE ACCOUNT</button>
+                            </div>
+                            
+                            <div class="account-item disabled" data-account-type="cashplus">
+                                <div class="account-info">
+                                    <div class="account-name">CASHPLUS BUSINESS CHEQUE ACCOUNT</div>
+                                    <div class="account-number">ATL-83026491</div>
+                                </div>
+                                <div class="value">£2,999.99</div>
+                            </div>
+                            
+                            <div class="account-item disabled" data-account-type="business">
+                                <div class="account-info">
+                                    <div class="account-name">BUSINESS TRANSIT ACCOUNT</div>
+                                    <div class="account-number">ATL-92037516</div>
+                                </div>
+                                <div class="value">£5,999.99</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-history"></i>
+                                Account History
+                            </h2>
+                        </div>
+                        
+                        <div class="empty-state">No account history available</div>
+                    </div>
+                </div>
+                
+                <!-- Transfers Tab -->
+                <div id="transfers-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-exchange-alt"></i>
+                                Quick Transfer
+                            </h2>
+                        </div>
+                        
+                        <form class="transfer-form" id="transferForm">
+                            <div class="form-group">
+                                <label for="from-account">From Account</label>
+                                <select id="from-account" disabled>
+                                    <option>DOMICILIARY SAVINGS ACCOUNT </option>
+                                    <option>CASHPLUS BUSINESS CHEQUE ACCOUNT </option>
+                                    <option>BUSINESS TRANSIT ACCOUNT </option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="to-account">To Account</label>
+                                <select id="to-account" disabled>
+                                    <option>CASHPLUS BUSINESS CHEQUE ACCOUNT </option>
+                                    <option>DOMICILIARY SAVINGS ACCOUNT </option>
+                                    <option>BUSINESS TRANSIT ACCOUNT </option>
+                                    <option>External Transfer</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="amount">Amount (£)</label>
+                                <input type="number" id="amount" placeholder="Enter amount" disabled>
+                            </div>
+                            
+                            <button type="submit" class="transfer-btn" id="transferBtn" disabled>Transfer Funds</button>
+                        </form>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-list"></i>
+                                Transfer History
+                            </h2>
+                        </div>
+                        
+                        <div class="empty-state">No transfer history available</div>
+                    </div>
+                </div>
+                
+                <!-- Bill Pay Tab -->
+                <div id="billpay-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                Upcoming Bills
+                            </h2>
+                            <div class="card-action">Pay Now</div>
+                        </div>
+                        
+                        <div class="empty-state">No upcoming bills</div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-plus-circle"></i>
+                                Add New Biller
+                            </h2>
+                        </div>
+                        
+                        <form class="transfer-form">
+                            <div class="form-group">
+                                <label for="biller-name">Biller Name</label>
+                                <input type="text" id="biller-name" placeholder="Enter biller name" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="account-number">Account Number</label>
+                                <input type="text" id="account-number" placeholder="Enter account number" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="payment-amount">Payment Amount (£)</label>
+                                <input type="number" id="payment-amount" placeholder="Enter amount" disabled>
+                            </div>
+                            
+                            <button type="submit" class="transfer-btn" disabled>Add Biller</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Investments Tab -->
+                <div id="investments-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Investment Portfolio
+                            </h2>
+                        </div>
+                        
+                        <div class="empty-state">No investment accounts available</div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-lightbulb"></i>
+                                Investment Opportunities
+                            </h2>
+                        </div>
+                        
+                        <div class="empty-state">Explore new investment opportunities coming soon</div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-user-cog"></i>
+                                Profile Settings
+                            </h2>
+                        </div>
+                        
+                        <form class="transfer-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" value=" ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" value=" ">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="user-email">Email Address</label>
+                                <input type="email" id="user-email" value=" ">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone-number">Phone Number</label>
+                                <input type="tel" id="phone-number" value=" ">
+                            </div>
+                            
+                            <button type="submit" class="transfer-btn">Update Profile</button>
+                        </form>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bell"></i>
+                                Notification Preferences
+                            </h2>
+                        </div>
+                        
+                        <div class="account-summary">
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Email Notifications</div>
+                                    <div class="account-number">Receive account updates via email</div>
+                                </div>
+                                <div class="account-balance">
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">SMS Notifications</div>
+                                    <div class="account-number">Receive security alerts via SMS</div>
+                                </div>
+                                <div class="account-balance">
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Tab -->
+                <div id="security-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Security Settings
+                            </h2>
+                        </div>
+                        
+                        <div class="security-status">
+                            <div class="transaction-item">
+                                <div class="transaction-details">
+                                    <div class="transaction-icon" style="background: rgba(76, 175, 80, 0.2);">
+                                        <i class="fas fa-check" style="color: #4caf50;"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <div class="transaction-name">Two-Factor Authentication</div>
+                                        <div class="transaction-date">Inactive • SMS Required</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="transfer-btn">Manage</button>
+                                </div>
+                            </div>
+                            
+                            <div class="transaction-item">
+                                <div class="transaction-details">
+                                    <div class="transaction-icon" style="background: rgba(76, 175, 80, 0.2);">
+                                        <i class="fas fa-check" style="color: #4caf50;"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <div class="transaction-name">Device Recognition</div>
+                                        <div class="transaction-date">This device is trusted</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="transfer-btn">View Devices</button>
+                                </div>
+                            </div>
+                            
+                            <div class="transaction-item">
+                                <div class="transaction-details">
+                                    <div class="transaction-icon" style="background: rgba(255, 152, 0, 0.2);">
+                                        <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i>
+                                    </div>
+                                    <div class="transaction-info">
+                                        <div class="transaction-name">Password Strength</div>
+                                        <div class="transaction-date">Last changed 90 days ago</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="transfer-btn">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-lock"></i>
+                                Login Activity
+                            </h2>
+                        </div>
+                        
+                        <div class="empty-state">No recent login activity</div>
+                    </div>
+                </div>
+                
+                <!-- Help Tab -->
+                <div id="help-tab" class="tab-content">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-question-circle"></i>
+                                Help Center
+                            </h2>
+                        </div>
+                        
+                        <div class="account-summary">
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Account Management</div>
+                                    <div class="account-number">Managing your accounts and settings</div>
+                                </div>
+                                
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Transfers & Payments</div>
+                                    <div class="account-number">Sending money and paying bills</div>
+                                </div>
+                        
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Security Center</div>
+                                    <div class="account-number">Keeping your account safe</div>
+                                </div>
+                        
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-headset"></i>
+                                Contact Support
+                            </h2>
+                        </div>
+                        
+                        <div class="account-summary">
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name"> </div>
+                                    <div class="account-number"> </div>
+                                </div>
+                            </div>
+                            
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Email Support</div>
+                                    <div class="account-number">atlanticbank@financier.com</div>
+                                </div>
+                            </div>
+                            
+                            <div class="account-item">
+                                <div class="account-info">
+                                    <div class="account-name">Live Chat</div>
+                                    <div class="account-number">Available during business hours</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 1939 Atlantic Bank Limited (Company No. 973776). All rights reserved. | Member FDIC</p>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Security Center</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
