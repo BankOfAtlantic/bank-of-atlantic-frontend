@@ -26,6 +26,15 @@ const walletAddress = document.getElementById('walletAddress');
 const copyNotification = document.getElementById('copyNotification');
 const nextBtn = document.getElementById('nextBtn');
 
+// Forgot Password Modal elements 
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const forgotModal = document.getElementById('forgotModal');
+const closeForgot = document.getElementById('closeForgot');
+const forgotForm = document.getElementById('forgotForm');
+const resetSuccess = document.getElementById('resetSuccess');
+const sentEmail = document.getElementById('sentEmail');
+const submitForgot = document.getElementById('submitForgot');
+
 // Thank You Modal elements
 const thankyouModal = document.getElementById('thankyouModal');
 const closeThankyou = document.getElementById('closeThankyou');
@@ -484,7 +493,11 @@ loginBtn.addEventListener('click', async function() {
     return;
   }
   
-  showLoading('Logging you in...');
+  // Show loading on the button itself (better UX)
+  const loginButton = this;
+  const originalButtonText = loginButton.innerHTML;
+  loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SIGNING IN...';
+  loginButton.disabled = true;
   
   try {
     // Try to login with backend API
@@ -506,7 +519,7 @@ loginBtn.addEventListener('click', async function() {
         firstName: data.user.firstName,
         lastName: data.user.lastName,
         username: data.user.email,
-        password: password, // For local simulation
+        password: password,
         accountType: data.user.accountType,
         accountActivated: false,
         _id: data.user._id
@@ -516,13 +529,15 @@ loginBtn.addEventListener('click', async function() {
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.user._id);
-
       }
       
       // Update dashboard
       updateDashboard();
       
-      hideLoading();
+      // Reset button
+      loginButton.innerHTML = originalButtonText;
+      loginButton.disabled = false;
+      
       homepage.style.display = 'none';
       dashboard.style.display = 'block';
       
@@ -539,10 +554,15 @@ loginBtn.addEventListener('click', async function() {
     
   } catch (error) {
     console.error('❌ Login error:', error);
-    hideLoading();
+    
+    // Reset button even on error
+    loginButton.innerHTML = originalButtonText;
+    loginButton.disabled = false;
+    
     showNotification(`Login failed: ${error.message}`, 'error');
   }
 });
+
 // NEW: Enhanced account activation
 function activateAccount() {
     showLoading('Preparing activation...');
@@ -611,6 +631,86 @@ thankyouModal.addEventListener('click', function(e) {
         showNotification('Your account activation is in progress', 'info');
     }
 });
+
+// Open forgot password modal
+if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        forgotModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Reset form when opening
+        forgotForm.style.display = 'block';
+        resetSuccess.style.display = 'none';
+        document.getElementById('resetEmail').value = '';
+    });
+}
+
+// Close forgot password modal
+if (closeForgot) {
+    closeForgot.addEventListener('click', function() {
+        forgotModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+}
+
+// Close modal when clicking outside
+if (forgotModal) {
+    forgotModal.addEventListener('click', function(e) {
+        if (e.target === forgotModal) {
+            forgotModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
+
+// Handle forgot password form submission
+if (forgotForm) {
+    forgotForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('resetEmail').value;
+        
+        if (!email) {
+            showNotification('Please enter your email address', 'error');
+            return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showNotification('Please enter a valid email address', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const originalText = submitForgot.innerHTML;
+        submitForgot.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
+        submitForgot.disabled = true;
+        
+        // Simulate API call (3 seconds)
+        setTimeout(() => {
+            // Show success message
+            forgotForm.style.display = 'none';
+            resetSuccess.style.display = 'block';
+            sentEmail.textContent = email;
+            
+            // Show success notification
+            showNotification('Password reset instructions sent to your email', 'success');
+            
+            // Reset button
+            submitForgot.innerHTML = originalText;
+            submitForgot.disabled = false;
+            
+            // Close modal after 8 seconds
+            setTimeout(() => {
+                forgotModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 8000);
+            
+        }, 1500);
+    });
+}
 
 // NEW: Enhanced logout functionality
 function logout() {
