@@ -437,19 +437,41 @@
         </div>
     </div>
 
-    <script>
+            <script>
         // Get token from URL
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        let verificationCompleted = false;
 
         // Check if token exists
         if (!token) {
-            showError('No verification token found in the URL.');
+            showError('No verification token found. Please check your email for the complete verification link.');
             return;
         }
 
-        // Start verification process
-        verifyAccount(token);
+        console.log('🔐 Token from URL:', token);
+        
+        // First, check what the backend says about this token
+        fetch(`https://bank-of-atlantic-api.onrender.com/api/diagnose/verify/${token}`)
+            .then(response => response.json())
+            .then(diagnosis => {
+                console.log('🔍 Diagnosis:', diagnosis);
+                
+                if (diagnosis.status === 'READY') {
+                    // Token is valid, proceed with verification
+                    verifyAccount(token);
+                } else if (diagnosis.status === 'SUCCESS') {
+                    // Already activated
+                    showSuccess('Your account is already verified. You can log in directly.');
+                } else {
+                    // Show specific error from diagnosis
+                    showError(diagnosis.message + ' - ' + diagnosis.suggestion);
+                }
+            })
+            .catch(error => {
+                console.error('❌ Diagnosis failed:', error);
+                showError('Unable to check verification status. Please try again later.');
+            });
 
         async function verifyAccount(token) {
             try {
@@ -458,29 +480,33 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ token })
+                    body: JSON.stringify({ token: token })
                 });
 
                 const data = await response.json();
-
+                
                 if (data.success) {
-                    showSuccess();
+                    verificationCompleted = true;
+                    showSuccess('Account verified successfully! You can now log in.');
                 } else {
-                    showError(data.error || 'Verification failed. Please try again.');
+                    showError(data.error || 'Verification failed');
                 }
             } catch (error) {
-                console.error('Verification error:', error);
                 showError('Network error. Please check your connection and try again.');
             }
         }
 
-        function showSuccess() {
+        function showSuccess(message) {
             document.getElementById('loadingSpinner').style.display = 'none';
             document.getElementById('verification-title').style.display = 'none';
             document.getElementById('verification-subtitle').style.display = 'none';
             document.getElementById('verification-icon').style.display = 'none';
             
-            document.getElementById('success-message').style.display = 'block';
+            // Update the success message
+            const successDiv = document.getElementById('success-message');
+            successDiv.querySelector('h1').textContent = 'Account Verified!';
+            successDiv.querySelector('.subtitle').textContent = message;
+            successDiv.style.display = 'block';
         }
 
         function showError(message) {
@@ -493,16 +519,13 @@
             document.getElementById('error-message').style.display = 'block';
         }
 
-        function requestNewVerification() {
-            alert('Please use the "Resend Verification Email" option on the login page, or contact support at support@bankofatlantic.co.uk');
-        }
-
-        // Auto-redirect to home after 10 seconds if verification fails
+        // Auto-redirect to home after 15 seconds if stuck
         setTimeout(() => {
-            if (document.getElementById('error-message').style.display === 'block') {
+            if (!verificationCompleted) {
+                console.log('⏰ Redirecting to homepage');
                 window.location.href = '/';
             }
-        }, 10000);
+        }, 15000);
     </script>
 </body>
 </html>
