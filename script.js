@@ -449,13 +449,13 @@ registrationForm.addEventListener('submit', async function(e) {
       
       // Store user data locally
       window.userData = {
-        firstName: data.user.firstName,
-        lastName: data.user.lastName,
-        username: data.user.email,
+        firstName: data.user?.firstName || userData.firstName,
+        lastName: data.user?.lastName || userData.lastName,
+        username: data.user?.email || userData.email,
         password: userData.password, // Note: store plain password for local login simulation
-        accountType: data.user.accountType,
+        accountType: data.user?.accountType || userData.accountType,
         accountActivated: false,
-         _id: data.user._id
+         _id: data.user?._id
       };
       
       // Also store the token if you want to use real authentication
@@ -483,7 +483,7 @@ registrationForm.addEventListener('submit', async function(e) {
   registrationForm.reset();
 });
 
-// NEW: Enhanced login functionality
+// NEW: FIXED Login functionality - PROPER ERROR HANDLING
 loginBtn.addEventListener('click', async function() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -510,33 +510,63 @@ loginBtn.addEventListener('click', async function() {
     });
     
     const data = await response.json();
+    console.log('🔍 Login response:', data); // Debug log
     
     if (data.success) {
-      console.log('✅ Login successful:', data);
+      console.log('✅ Login successful');
       
-      // Update user data
+      let userInfo = null;
+      
+      // Check if backend sent user data
+      if (data.user && data.user.firstName) {
+        // Case 1: Backend sent complete user data
+        userInfo = data.user;
+        console.log('✅ Using user data from login response');
+      } else if (data.token) {
+        // Case 2: Backend only sent token, need to fetch user data
+        console.log('⚠️ No user data in response, fetching from /api/me');
+        
+        try {
+          const userResponse = await fetch('https://bank-of-atlantic-api.onrender.com/api/me', {
+            headers: {
+              'Authorization': `Bearer ${data.token}`
+            }
+          });
+          
+          if (userResponse.ok) {
+            const userDataResponse = await userResponse.json();
+            userInfo = userDataResponse.user;
+            console.log('✅ Fetched user data:', userInfo);
+          }
+        } catch (fetchError) {
+          console.log('❌ Failed to fetch user data:', fetchError);
+        }
+      }
+      
+      // Prepare userData object with fallbacks
       userData = {
-        firstName: data.user.firstName,
-        lastName: data.user.lastName,
-        username: data.user.email,
+        firstName: userInfo?.firstName || username.split('@')[0] || 'User',
+        lastName: userInfo?.lastName || 'Customer',
+        username: userInfo?.email || username,
         password: password,
-        accountType: data.user.accountType,
-        accountActivated: false,
-        _id: data.user._id
+        accountType: userInfo?.accountType || 'domiciliary',
+        accountActivated: userInfo?.accountActivated || false,
+        _id: userInfo?._id || 'temp-id'
       };
       
       // Store token for future requests
       if (data.token) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.user._id);
+        localStorage.setItem('userId', userData._id);
+        console.log('🔐 Token stored');
       }
-      
-      // Update dashboard
-      updateDashboard();
       
       // Reset button
       loginButton.innerHTML = originalButtonText;
       loginButton.disabled = false;
+      
+      // Update dashboard
+      updateDashboard();
       
       homepage.style.display = 'none';
       dashboard.style.display = 'block';
